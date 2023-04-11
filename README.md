@@ -54,7 +54,7 @@ Tailwindcss
 npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch
 
 ##### React Leaflet
-1 - Para instalação via CDN <link href="https://react-leaflet.js.org/docs/start-installation/">Clique aqui</link> ou:
+1 - Para instalação via CDN <a href="https://react-leaflet.js.org/docs/start-installation/">Clique aqui</a> ou:
 npm install react react-dom leaflet
 
 
