@@ -1,11 +1,10 @@
-import { Login } from "./components/Login";
+import { Outlet } from "react-router-dom";
 
-function App() {
+export function App() {
   return (
     <div className="App">
-      <Login />
+      <Outlet />
     </div>
   );
 }
 
-export default App;
