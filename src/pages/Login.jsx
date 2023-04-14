@@ -1,38 +1,24 @@
+import { useContext, useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { UserContext } from "../contexts/Context";
 
 export const Login = () => {
-  //instanciar vallidação
-  const schema = yup.object().shape({
-    email: yup.string().email().required("Campo obrigatório"),
-    password: yup
-      .string()
-      .required("Campo obrigatório")
-      .matches(
-        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
-        "Senha deve conter no mínimo 8 caracteres e uma letra"
-      ),
-  });
-
   const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    handleOnSubmit,
     register,
-    handleSubmit: onSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
-
-  const handleSubmit = ({ email, password }) => {
-    //enviar para o localStorage
-    console.log(email, password);
-  };
+    handleSubmit,
+    errors,
+  } = useContext(UserContext);
 
   return (
     <section className="py-28">
       <Form
-        onSubmit={onSubmit(handleSubmit)}
+        onSubmit={handleSubmit(handleOnSubmit)}
         className="block max-w-lg m-auto p-8 border-2 border-gray-100 rounded-lg shadow-md shadow-slate-300 bg-gray-100"
       >
         <Form.Group
@@ -42,11 +28,15 @@ export const Login = () => {
           <Form.Label className="mb-1">E-mail</Form.Label>
           <Form.Control
             className="w-full rounded border-2 border-gray-400 p-3 outline-none"
-            {...register("email", { required: true })}
             type="email"
             placeholder="Digite seu e-mail"
+            {...register("email", { required: true })}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
-          {errors.email && <p>{errors.email?.message}</p>}
+          {errors.email && (
+            <p className="text-red-500">{errors.email?.message}</p>
+          )}
         </Form.Group>
         <Form.Group
           className="grid mb-4 text-neutral-500"
@@ -55,11 +45,15 @@ export const Login = () => {
           <Form.Label className="mb-1">Senha</Form.Label>
           <Form.Control
             className="w-full rounded border-2 border-gray-400 p-3 outline-none "
-            {...register("password", { required: true })}
             type="password"
             placeholder="********"
+            {...register("password", { required: true })}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
-          {errors.password && <p>{errors.password?.message}</p>}
+          {errors.password && (
+            <p className="text-red-500">{errors.password?.message}</p>
+          )}
         </Form.Group>
 
         <div className="flex w-full m-auto justify-between pb-6">
