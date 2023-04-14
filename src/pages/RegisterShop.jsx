@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export const RegisterShop = () => {
   return (
     <div>
-      Registrar lojas
+      <h1>Cadastre uma loja</h1>
     </div>
-  )
-}
+  );
+};
