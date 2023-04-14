@@ -2,8 +2,9 @@ import React from "react";
 
 export const RegisterShop = () => {
   return (
-    <div>
+    <section className="py-28">
       <h1>Cadastre uma loja</h1>
-    </div>
+     
+    </section>
   );
 };
