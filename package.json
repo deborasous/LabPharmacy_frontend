@@ -4,18 +4,22 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite && npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "dev": "vite ",
+    "tai": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.0.1",
     "bootstrap": "^5.2.3",
     "leaflet": "^1.9.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.2",
     "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
-    "react-router-dom": "^6.10.0"
+    "react-input-mask": "^2.0.4",
+    "react-router-dom": "^6.10.0",
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
