@@ -1,19 +1,63 @@
 import { useContext } from "react";
 import { Button, Form } from "react-bootstrap";
 import { AuthContext } from "../contexts/Context";
+import * as yup from "yup";
+import { Link, useNavigate } from "react-router-dom";
+
+const schema = yup.object().shape({
+  userName: yup.string().required("Nome é obrigatório"),
+  email: yup
+    .string()
+    .email("Digite um e-mail válido")
+    .required("Campo obrigatório"),
+  password: yup
+    .string()
+    .required("Campo obrigatório")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+      "Senha deve conter no mínimo 8 caracteres e uma letra"
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Senhas devem ser iguais")
+    .required("Confirme a senha"),
+});
 
 export const RegisterUser = () => {
   const {
-    user,
-    handleChange,
-    inputName,
-    inputEmail,
-    sendUsers,
-    submitRegisterUser,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    userName,
+    setUserName,
+    confirmPassword,
+    setConfirmPassword,
     register,
     handleSubmit,
     errors,
   } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const submitRegisterUser = async () => {
+    try {
+      await schema.validate({ userName, email, password, confirmPassword });
+      const user = {
+        userName,
+        email,
+        password,
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+      navigate("/entrar");
+
+      console.log("Usuário cadastrado com sucesso");
+    } catch (error) {
+      console.log("Vixi, algo de errado não está certo", error);
+    }
+  };
 
   return (
     <section className="py-28">
@@ -32,10 +76,9 @@ export const RegisterUser = () => {
             type="text"
             placeholder="Digite seu Nome"
             name="userName"
-            ref={inputName}
             {...register("userName", { required: true })}
-            value={user.userName}
-            onChange={(event) => handleChange(event, "userName")}
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
           />
           {errors.userName && (
             <p className="text-red-500">{errors.userName?.message}</p>
@@ -52,10 +95,9 @@ export const RegisterUser = () => {
             type="email"
             placeholder="Digite seu e-mail"
             name="email"
-            ref={inputEmail}
             {...register("email", { required: true })}
-            value={user.email}
-            onChange={(event) => handleChange(event, "email")}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email && (
             <p className="text-red-500">{errors.email?.message}</p>
@@ -73,8 +115,8 @@ export const RegisterUser = () => {
             placeholder="********"
             name="password"
             {...register("password", { required: true })}
-            value={user.password}
-            onChange={(event) => handleChange(event, "password")}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {errors.password && (
             <p className="text-red-500">{errors.password?.message}</p>
@@ -92,8 +134,8 @@ export const RegisterUser = () => {
             placeholder="********"
             name="confirmPassword"
             {...register("confirmPassword", { required: true })}
-            value={user.confirmPassword}
-            onChange={(event) => handleChange(event, "confirmPassword")}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           />
           {errors.confirmPassword && (
             <p className="text-red-500">{errors.confirmPassword.message}</p>
@@ -106,6 +148,12 @@ export const RegisterUser = () => {
         >
           Cadastrar
         </Button>
+        <Link
+          to="/entrar"
+          className="flex mt-5 text-sm text-indigo-500 font-medium cursor-pointer"
+        >
+          Voltar para Login
+        </Link>
       </Form>
     </section>
   );

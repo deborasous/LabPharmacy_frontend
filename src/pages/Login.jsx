@@ -1,11 +1,20 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { AuthContext } from "../contexts/Context";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
-  const { user, setUser, submitLogin, register, handleSubmit, errors } =
-    useContext(AuthContext);
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    submitLogin,
+    register,
+    handleSubmit,
+    errors,
+  } = useContext(AuthContext);
 
   return (
     <section className="py-28">
@@ -24,13 +33,8 @@ export const Login = () => {
             placeholder="Digite seu e-mail"
             name="email"
             {...register("email", { required: true })}
-            value={user.email}
-            onChange={(e) =>
-              setUser((user) => ({
-                ...user,
-                [e.target.name]: e.target.value,
-              }))
-            }
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email && (
             <p className="text-red-500">{errors.email?.message}</p>
@@ -47,13 +51,8 @@ export const Login = () => {
             placeholder="********"
             name="password"
             {...register("password", { required: true })}
-            value={user.password}
-            onChange={(e) =>
-              setUser((user) => ({
-                ...user,
-                [e.target.name]: e.target.value,
-              }))
-            }
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {errors.password && (
             <p className="text-red-500">{errors.password?.message}</p>
@@ -61,18 +60,18 @@ export const Login = () => {
         </Form.Group>
 
         <div className="flex w-full m-auto justify-between pb-6">
-          <a
+          <Link
             to="#"
             className="text-sm text-indigo-500 font-medium cursor-pointer"
           >
             Esqueceu a senha?
-          </a>
-          <a
-            to="#"
+          </Link>
+          <Link
+            to="/cadastrar-usuario"
             className="text-sm text-indigo-500 font-medium cursor-pointer"
           >
             Criar conta
-          </a>
+          </Link>
         </div>
         <Button
           type="submit"

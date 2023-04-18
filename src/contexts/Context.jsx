@@ -1,18 +1,14 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
 //instanciar validação
 const schema = yup.object().shape({
-  name: yup.string().required("Nome é obrigatório"),
-  email: yup
-    .string()
-    .email("Digite um e-mail válido")
-    .required("Campo obrigatório"),
+  email: yup.string().email().required("Campo obrigatório"),
   password: yup
     .string()
     .required("Campo obrigatório")
@@ -20,24 +16,18 @@ const schema = yup.object().shape({
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       "Senha deve conter no mínimo 8 caracteres e uma letra"
     ),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Senhas devem ser iguais")
-    .required("Confirme a senha"),
 });
 
 //**Provider component */
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState({
-    userName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const [listUser, setListUser] = useState([]);
-
-  console.log(user);
+  //substituir por um banco de dados
+  const userEmail = "front.sous@gmail.com";
+  const userPassword = "g25252525";
 
   const {
     register,
@@ -47,61 +37,42 @@ export const UserProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
-  const submitLogin = (data) => {
-    const userEmail = localStorage.getItem("email");
-    const userPassword = localStorage.getItem("password");
-    console.log(userEmail, userPassword);
-
-    if (data.email === userEmail && data.password === userPassword) {
-      navigate("/");
-    }
-  };
-
-  const submitRegisterUser = async () => {
-    const { userName, email, password, confirmPassword } = user;
-
+  const submitLogin = async () => {
     try {
-      await schema.validate({ userName, email, password, confirmPassword });
-      setListUser([...listUser, user]);
-      navigate("/entrar");
+      const localStoreUser = localStorage.getItem("user");
+      const { email: localStoretEmail, password: localStorePassword } =
+        JSON.parse(localStoreUser);
 
-      console.log("Usuário cadastrado com sucesso");
+      if (email === localStoretEmail && password === localStorePassword) {
+        navigate("/");
+      }
+
+      if (!localStoreUser) {
+        throw new Error("Usuário não cadastrado");
+      }
+
+      if (email !== localStoretEmail || password !== localStorePassword) {
+        throw new Error("Credenciais inválidas");
+      }
     } catch (error) {
-      console.log("Vixi, algo de errado não está certo", error);
+      console.log("Usuário não autenticado", error);
     }
   };
-
-  const handleChange = (event, fieldName) => {
-    const { value } = event.target;
-    setUser((prevState) => ({
-      ...prevState,
-      [fieldName]: value,
-    }));
-  };
-
-  //carrega lista de usuarios
-  useEffect(() => {
-    if (localStorage.getItem("user") !== null) {
-      setListUser(JSON.parse(localStorage.getItem("user")));
-    }
-  }, []);
-
-  //???
-  useEffect(() => {
-    localStorage.setItem("user", JSON.stringify(listUser));
-  }, [listUser]);
 
   const contextValues = {
-    user,
-    setUser,
+    email,
+    setEmail,
+    password,
+    setPassword,
+    userName,
+    setUserName,
+    confirmPassword,
+    setConfirmPassword,
     submitLogin,
-    handleChange,
-    submitRegisterUser,
     register,
     handleSubmit,
     errors,
   };
-
   return (
     <AuthContext.Provider value={contextValues}>
       {children}
