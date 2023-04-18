@@ -25,10 +25,6 @@ export const UserProvider = ({ children }) => {
   const [userName, setUserName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  //substituir por um banco de dados
-  const userEmail = "front.sous@gmail.com";
-  const userPassword = "g25252525";
-
   const {
     register,
     handleSubmit,
