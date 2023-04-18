@@ -21,8 +21,10 @@ export const RegisterShop = () => {
     street: "",
     uf: "",
   });
+
   const [message, setMessage] = useState("");
   console.log(company, "ddd");
+  console.log(companyData, "rrfg");
 
   const resetForm = () => {
     setCompany({
@@ -66,6 +68,7 @@ export const RegisterShop = () => {
       .then((res) => res.json())
       .then((data) => {
         setCompany({
+          ...company,
           street: data.logradouro,
           district: data.bairro,
           city: data.localidade,
@@ -83,24 +86,28 @@ export const RegisterShop = () => {
       });
   };
 
+  const addCompany = (e) => {
+    e.preventDefault();
+    const newData = localStorage.getItem("Lojas") || [];
+
+    localStorage.setItem("Lojas", JSON.stringify([...newData, company]));
+  };
+
   const submitCompany = (e) => {
     e.preventDefault();
-    addCompany(company);
+
+    addCompany();
     checkCEP();
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
     setCompany((prevCompany) => ({
       ...prevCompany,
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    localStorage.setItem("companyData", JSON.stringify(company));
-  }, [company]);
 
   return (
     <section className="py-10">
