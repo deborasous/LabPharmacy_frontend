@@ -28,7 +28,7 @@ export const Login = () => {
         >
           <Form.Label className="mb-1">E-mail</Form.Label>
           <Form.Control
-            className="w-full rounded border-1 border-gray-400 p-3 outline-none"
+            className="w-full rounded border-1 border-gray-400 p-3 outline-none max-h-50"
             type="email"
             placeholder="Digite seu e-mail"
             name="email"
@@ -46,7 +46,7 @@ export const Login = () => {
         >
           <Form.Label className="mb-1">Senha</Form.Label>
           <Form.Control
-            className="w-full rounded border-1 border-gray-400 p-3 outline-none "
+            className="w-full rounded border-1 border-gray-400 p-3 outline-none max-h-50 "
             type="password"
             placeholder="********"
             name="password"
