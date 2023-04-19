@@ -207,7 +207,6 @@ export const RegisterProduct = () => {
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="R$"
-                  mask={"R$ 999,99"}
                   name="price"
                   value={product.price}
                   {...register("price", { required: true })}
