@@ -7,6 +7,7 @@ import { RegisterUser } from "../pages/RegisterUser";
 import { RegisterShop } from "../pages/RegisterShop";
 import { RegisterProduct } from "../pages/RegisterProduct";
 import { Error } from "../components/Error";
+import { MapShop } from "../components/Map";
 
 export const routes = createBrowserRouter([
   {
