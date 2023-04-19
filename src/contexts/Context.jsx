@@ -18,7 +18,7 @@ const schema = yup.object().shape({
     ),
 });
 
-//**Provider component */
+//**Provider Camponent */
 export const UserProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

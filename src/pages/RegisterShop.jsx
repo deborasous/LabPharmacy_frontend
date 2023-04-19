@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import InputMask from "react-input-mask";
 import { useForm } from "react-hook-form";
@@ -6,7 +6,7 @@ import * as yup from "yup";
 
 export const RegisterShop = () => {
   const [companyData, setCompanyData] = useState([]);
-  const [company, setCompany] = useState({
+  let [company, setCompany] = useState({
     businessName: "",
     email: "",
     cnpj: "",
@@ -21,10 +21,6 @@ export const RegisterShop = () => {
     street: "",
     uf: "",
   });
-
-  const [message, setMessage] = useState("");
-  console.log(company, "ddd");
-  console.log(companyData, "rrfg");
 
   const resetForm = () => {
     setCompany({
@@ -45,18 +41,57 @@ export const RegisterShop = () => {
   };
 
   const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    cnpj: yup.string().length(14).matches(/^\d+$/).required(),
-    cep: yup.string().length(8).matches(/^\d+$/).required(),
+    fantasyName: yup.string().required("Campo Obrigatório"),
+    businessName: yup.string().required("Campo Obrigatório"),
+    cnpj: yup
+      .string()
+      .length(14)
+      .matches(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)
+      .required("Campo Obrigatório"),
+    email: yup
+      .string()
+      .email("Insira um email válido")
+      .required("Campo Obrigatório"),
+    celPhone: yup
+      .string()
+      .matches(
+        /^\(\d{2}\)\s\d{5}\-\d{4}$/,
+        "Insira um número de telefone válido"
+      )
+      .required("Campo Obrigatório"),
+    phoneNumber: yup
+      .string()
+      .matches(
+        /^\([1-9]{2}\) [2-9][0-9]{3,4}\-[0-9]{4}$/,
+        "Insira um número de telefone válido"
+      ),
+    cep: yup
+      .string()
+      .matches(/^\d{5}-\d{3}$/, "CEP digitado incorreto")
+      .required("Campo Obrigatório"),
+    city: yup.string().required("Campo Obrigatório"),
+    complement: yup.string(),
+    district: yup.string().required("Campo Obrigatório"),
+    number: yup.string().required("Campo Obrigatório"),
+    street: yup.string().required("Campo Obrigatório"),
+    uf: yup.string().required("Campo Obrigatório"),
   });
 
   const {
     register,
-    handleSubmit,
     setFocus,
     setValue,
     formState: { errors },
   } = useForm(schema);
+
+  const validateFields = (fields) => {
+    for (const key in fields) {
+      if (fields.hasOwnProperty(key) && !fields[key]) {
+        return false;
+      }
+    }
+    return true;
+  };
 
   const checkCEP = (e) => {
     e.preventDefault();
@@ -86,18 +121,22 @@ export const RegisterShop = () => {
       });
   };
 
-  const addCompany = (e) => {
-    e.preventDefault();
-    const newData = localStorage.getItem("Lojas") || [];
-
-    localStorage.setItem("Lojas", JSON.stringify([...newData, company]));
+  const addCompany = () => {
+    const newCompanyData = [...companyData, company];
+    localStorage.setItem("Lojas", JSON.stringify(newCompanyData));
+    setCompanyData(newCompanyData);
   };
 
   const submitCompany = (e) => {
     e.preventDefault();
-
-    addCompany();
-    checkCEP();
+    const areFieldsValid = validateFields(company);
+    if (areFieldsValid) {
+      addCompany();
+      checkCEP();
+      resetForm();
+    } else {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+    }
   };
 
   const handleChange = (e) => {
@@ -116,7 +155,7 @@ export const RegisterShop = () => {
       </h1>
 
       <Form
-        onSubmit={handleSubmit(submitCompany)}
+        onSubmit={submitCompany}
         className="block max-w-6xl m-auto px-6 py-10 lg:px-10 border-2 border-gray-100 rounded-lg shadow-md shadow-slate-300 bg-gray-100"
       >
         <div>
@@ -215,7 +254,7 @@ export const RegisterShop = () => {
                   mask="(99) 9999-9999"
                   name="phoneNumber"
                   value={company.phoneNumber}
-                  {...register("phoneNumber", { required: true })}
+                  {...register("phoneNumber")}
                   onChange={handleChange}
                 />
               </Form.Group>
@@ -374,7 +413,7 @@ export const RegisterShop = () => {
                   placeholder="Apto, bloco..."
                   name="complement"
                   value={company.complement}
-                  {...register("complement", { required: true })}
+                  {...register("complement")}
                   onChange={handleChange}
                 />
                 {errors.complement && (
