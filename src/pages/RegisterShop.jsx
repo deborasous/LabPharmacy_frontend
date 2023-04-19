@@ -5,8 +5,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 export const RegisterShop = () => {
-  const [companyData, setCompanyData] = useState([]);
-  let [company, setCompany] = useState({
+  const [productData, setProductData] = useState([]);
+  let [product, setProduct] = useState({
     businessName: "",
     email: "",
     cnpj: "",
@@ -23,7 +23,7 @@ export const RegisterShop = () => {
   });
 
   const resetForm = () => {
-    setCompany({
+    setProduct({
       businessName: "",
       email: "",
       cnpj: "",
@@ -102,8 +102,8 @@ export const RegisterShop = () => {
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then((res) => res.json())
       .then((data) => {
-        setCompany({
-          ...company,
+        setProduct({
+          ...product,
           street: data.logradouro,
           district: data.bairro,
           city: data.localidade,
@@ -121,18 +121,18 @@ export const RegisterShop = () => {
       });
   };
 
-  const addCompany = () => {
-    const newCompanyData = [...companyData, company];
-    localStorage.setItem("Lojas", JSON.stringify(newCompanyData));
-    setCompanyData(newCompanyData);
+  const addproduct = () => {
+    const newproductData = [...productData, product];
+    localStorage.setItem("Lojas", JSON.stringify(newproductData));
+    setProductData(newproductData);
   };
 
-  const submitCompany = (e) => {
+  const submitproduct = (e) => {
     e.preventDefault();
-    const areFieldsValid = validateFields(company);
+    const areFieldsValid = validateFields(product);
     if (areFieldsValid) {
       try {
-        addCompany();
+        addproduct();
         checkCEP();
         resetForm();
         alert("Empresa cadastrada com sucesso!");
@@ -147,8 +147,8 @@ export const RegisterShop = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setCompany((prevCompany) => ({
-      ...prevCompany,
+    setProduct((prevproduct) => ({
+      ...prevproduct,
       [name]: value,
     }));
   };
@@ -160,7 +160,7 @@ export const RegisterShop = () => {
       </h1>
 
       <Form
-        onSubmit={submitCompany}
+        onSubmit={submitproduct}
         className="block max-w-6xl m-auto px-6 py-10 lg:px-10 border-2 border-gray-100 rounded-lg shadow-md shadow-slate-300 bg-gray-100"
       >
         <div>
@@ -175,11 +175,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Razão Social</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none"
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50"
                   type="text"
                   placeholder="Razão Social"
                   name="businessName"
-                  value={company.businessName}
+                  value={product.businessName}
                   {...register("businessName", { required: true })}
                   onChange={handleChange}
                 />
@@ -194,11 +194,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Nome Fantasia</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   name="fantasyName"
                   placeholder="Nome fantasia"
-                  value={company.fantasyName}
+                  value={product.fantasyName}
                   {...register("fantasyName", { required: true })}
                   onChange={handleChange}
                 />
@@ -213,12 +213,12 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*CNPJ</Form.Label>
                 <InputMask
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none"
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50"
                   type="text"
                   placeholder="99.999.999/0001-99"
                   mask="99.999.999/9999-99"
                   name="cnpj"
-                  value={company.cnpj}
+                  value={product.cnpj}
                   {...register("cnpj", { required: true })}
                   onChange={handleChange}
                 />
@@ -234,11 +234,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*E-mail</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none"
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50"
                   type="email"
                   placeholder="fulano@gmail.com"
                   name="email"
-                  value={company.email}
+                  value={product.email}
                   {...register("email", { required: true })}
                   onChange={handleChange}
                 />
@@ -253,12 +253,12 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">Telefone</Form.Label>
                 <InputMask
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="(99) 9999-9999"
                   mask="(99) 9999-9999"
                   name="phoneNumber"
-                  value={company.phoneNumber}
+                  value={product.phoneNumber}
                   {...register("phoneNumber")}
                   onChange={handleChange}
                 />
@@ -270,12 +270,12 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Celular</Form.Label>
                 <InputMask
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none"
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50"
                   type="text"
                   placeholder="(99) 99999-9999"
                   mask="(99) 99999-9999"
                   name="celPhone"
-                  value={company.celPhone}
+                  value={product.celPhone}
                   {...register("celPhone", { required: true })}
                   onChange={handleChange}
                 />
@@ -296,12 +296,12 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*CEP</Form.Label>
                 <InputMask
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="99999-999"
                   mask="99999-999"
                   name="cep"
-                  value={company.cep}
+                  value={product.cep}
                   {...register("cep", { required: true })}
                   onBlur={checkCEP}
                   onChange={handleChange}
@@ -317,11 +317,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Logradouro</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="Rua"
                   name="street"
-                  value={company.street}
+                  value={product.street}
                   {...register("street", { required: true })}
                   onChange={handleChange}
                 />
@@ -336,11 +336,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*N°</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="number"
                   placeholder="Número da casa"
                   name="number"
-                  value={company.number}
+                  value={product.number}
                   {...register("number", { required: true })}
                   onChange={handleChange}
                 />
@@ -356,11 +356,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Bairro</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="Bairro"
                   name="district"
-                  value={company.district}
+                  value={product.district}
                   {...register("district", { required: true })}
                   onChange={handleChange}
                 />
@@ -375,11 +375,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Cidade</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="Cidade"
                   name="city"
-                  value={company.city}
+                  value={product.city}
                   {...register("city", { required: true })}
                   onChange={handleChange}
                 />
@@ -394,11 +394,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">*Uf</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="Estado"
                   name="uf"
-                  value={company.uf}
+                  value={product.uf}
                   {...register("uf", { required: true })}
                   onChange={handleChange}
                 />
@@ -413,11 +413,11 @@ export const RegisterShop = () => {
               >
                 <Form.Label className="mb-1">Complemento</Form.Label>
                 <Form.Control
-                  className="w-full rounded border-2 border-gray-400 p-3 outline-none "
+                  className="w-full rounded border-2 border-gray-400 p-3 outline-none max-h-50 "
                   type="text"
                   placeholder="Apto, bloco..."
                   name="complement"
-                  value={company.complement}
+                  value={product.complement}
                   {...register("complement")}
                   onChange={handleChange}
                 />
