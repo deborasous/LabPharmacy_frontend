@@ -131,11 +131,16 @@ export const RegisterShop = () => {
     e.preventDefault();
     const areFieldsValid = validateFields(company);
     if (areFieldsValid) {
-      addCompany();
-      checkCEP();
-      resetForm();
+      try {
+        addCompany();
+        checkCEP();
+        resetForm();
+        alert("Empresa cadastrada com sucesso!");
+      } catch (error) {
+        alert(`Ocorreu um erro ao adicionar a empresa: ${error.message}`);
+      }
     } else {
-      alert("Por favor, preencha todos os campos obrigatórios.");
+      alert("Preencha todos os campos obrigatórios");
     }
   };
 
@@ -160,7 +165,7 @@ export const RegisterShop = () => {
       >
         <div>
           <div className="pb-6">
-            <h3 className="pb-1 text-green-800 text-xl">Dados da empresa</h3>
+            <h3 className="pb-1 text-green-800 text-xl">Dados da empresa*</h3>
             <hr className="pb-6 border-neutral-400" />
 
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
@@ -168,7 +173,7 @@ export const RegisterShop = () => {
                 className="grid mb-5 text-neutral-500"
                 controlId="formBasicEmail"
               >
-                <Form.Label className="mb-1">Razão Social</Form.Label>
+                <Form.Label className="mb-1">*Razão Social</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none"
                   type="text"
@@ -187,7 +192,7 @@ export const RegisterShop = () => {
                 className="grid mb-5 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">Nome Fantasia</Form.Label>
+                <Form.Label className="mb-1">*Nome Fantasia</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="text"
@@ -206,7 +211,7 @@ export const RegisterShop = () => {
                 controlId="cnpj"
                 className="grid mb-5 text-neutral-500"
               >
-                <Form.Label className="mb-1">CNPJ</Form.Label>
+                <Form.Label className="mb-1">*CNPJ</Form.Label>
                 <InputMask
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none"
                   type="text"
@@ -227,7 +232,7 @@ export const RegisterShop = () => {
                 className="grid mb-5 text-neutral-500"
                 controlId="formBasicEmail"
               >
-                <Form.Label className="mb-1">E-mail</Form.Label>
+                <Form.Label className="mb-1">*E-mail</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none"
                   type="email"
@@ -263,7 +268,7 @@ export const RegisterShop = () => {
                 className="grid mb-5 text-neutral-500"
                 controlId="celPhone"
               >
-                <Form.Label className="mb-1">Celular</Form.Label>
+                <Form.Label className="mb-1">*Celular</Form.Label>
                 <InputMask
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none"
                   type="text"
@@ -289,7 +294,7 @@ export const RegisterShop = () => {
                 className="grid mb-4 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">CEP</Form.Label>
+                <Form.Label className="mb-1">*CEP</Form.Label>
                 <InputMask
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="text"
@@ -310,7 +315,7 @@ export const RegisterShop = () => {
                 className="grid mb-4 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">Logradouro</Form.Label>
+                <Form.Label className="mb-1">*Logradouro</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="text"
@@ -329,7 +334,7 @@ export const RegisterShop = () => {
                 className="grid mb-4 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">N°</Form.Label>
+                <Form.Label className="mb-1">*N°</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="number"
@@ -349,7 +354,7 @@ export const RegisterShop = () => {
                 className="grid mb-4 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">Bairro</Form.Label>
+                <Form.Label className="mb-1">*Bairro</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="text"
@@ -368,7 +373,7 @@ export const RegisterShop = () => {
                 className="grid mb-4 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">Cidade</Form.Label>
+                <Form.Label className="mb-1">*Cidade</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="text"
@@ -387,7 +392,7 @@ export const RegisterShop = () => {
                 className="grid mb-4 text-neutral-500"
                 controlId="formBasicPassword"
               >
-                <Form.Label className="mb-1">Uf</Form.Label>
+                <Form.Label className="mb-1">*Uf</Form.Label>
                 <Form.Control
                   className="w-full rounded border-2 border-gray-400 p-3 outline-none "
                   type="text"
