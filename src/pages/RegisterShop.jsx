@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import InputMask from "react-input-mask";
+import { ToastContainer, toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 
 export const RegisterShop = () => {
-  const [productData, setProductData] = useState([]);
-  let [product, setProduct] = useState({
+  const [companyData, setCompanyData] = useState([]);
+  let [company, setCompany] = useState({
     businessName: "",
     email: "",
     cnpj: "",
@@ -23,7 +24,7 @@ export const RegisterShop = () => {
   });
 
   const resetForm = () => {
-    setProduct({
+    setCompany({
       businessName: "",
       email: "",
       cnpj: "",
@@ -94,7 +95,9 @@ export const RegisterShop = () => {
   };
 
   const checkCEP = (e) => {
-    e.preventDefault();
+    if (!e || !e.target) {
+      return;
+    }
 
     const cep = e.target.value.replace(/\D/g, "");
     console.log(cep);
@@ -102,8 +105,8 @@ export const RegisterShop = () => {
     fetch(`https://viacep.com.br/ws/${cep}/json/`)
       .then((res) => res.json())
       .then((data) => {
-        setProduct({
-          ...product,
+        setCompany({
+          ...company,
           street: data.logradouro,
           district: data.bairro,
           city: data.localidade,
@@ -121,34 +124,35 @@ export const RegisterShop = () => {
       });
   };
 
-  const addproduct = () => {
-    const newproductData = [...productData, product];
-    localStorage.setItem("Lojas", JSON.stringify(newproductData));
-    setProductData(newproductData);
+  const addShop = () => {
+    const newCompanyData = [...companyData, company];
+    localStorage.setItem("Lojas", JSON.stringify(newCompanyData));
+    setCompanyData(newCompanyData);
   };
 
-  const submitproduct = (e) => {
+  const submitCompany = async (e) => {
     e.preventDefault();
-    const areFieldsValid = validateFields(product);
+    const areFieldsValid = validateFields(company);
     if (areFieldsValid) {
       try {
-        addproduct();
+        await addShop();
         checkCEP();
         resetForm();
-        alert("Empresa cadastrada com sucesso!");
+        resetForm();
+        toast.success("Produto cadastrado com sucesso!");
       } catch (error) {
-        alert(`Ocorreu um erro ao adicionar a empresa: ${error.message}`);
+        toast.error(`Ocorreu um erro ao cadastrar o produto: ${error.message}`);
       }
     } else {
-      alert("Preencha todos os campos obrigatórios");
+      toast.warning("Preencha todos os campos obrigatórios");
     }
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    setProduct((prevproduct) => ({
-      ...prevproduct,
+    setCompany((prevCompany) => ({
+      ...prevCompany,
       [name]: value,
     }));
   };
@@ -160,9 +164,10 @@ export const RegisterShop = () => {
       </h1>
 
       <Form
-        onSubmit={submitproduct}
+        onSubmit={submitCompany}
         className="block max-w-6xl m-auto px-6 py-10 lg:px-10 border-2 border-gray-100 rounded-lg shadow-md shadow-slate-300 bg-gray-100"
       >
+        <ToastContainer />
         <div>
           <div className="pb-6">
             <h3 className="pb-1 text-green-800 text-xl">Dados da empresa*</h3>
@@ -179,7 +184,7 @@ export const RegisterShop = () => {
                   type="text"
                   placeholder="Razão Social"
                   name="businessName"
-                  value={product.businessName}
+                  value={company.businessName}
                   {...register("businessName", { required: true })}
                   onChange={handleChange}
                 />
@@ -198,7 +203,7 @@ export const RegisterShop = () => {
                   type="text"
                   name="fantasyName"
                   placeholder="Nome fantasia"
-                  value={product.fantasyName}
+                  value={company.fantasyName}
                   {...register("fantasyName", { required: true })}
                   onChange={handleChange}
                 />
@@ -218,7 +223,7 @@ export const RegisterShop = () => {
                   placeholder="99.999.999/0001-99"
                   mask="99.999.999/9999-99"
                   name="cnpj"
-                  value={product.cnpj}
+                  value={company.cnpj}
                   {...register("cnpj", { required: true })}
                   onChange={handleChange}
                 />
@@ -238,7 +243,7 @@ export const RegisterShop = () => {
                   type="email"
                   placeholder="fulano@gmail.com"
                   name="email"
-                  value={product.email}
+                  value={company.email}
                   {...register("email", { required: true })}
                   onChange={handleChange}
                 />
@@ -258,7 +263,7 @@ export const RegisterShop = () => {
                   placeholder="(99) 9999-9999"
                   mask="(99) 9999-9999"
                   name="phoneNumber"
-                  value={product.phoneNumber}
+                  value={company.phoneNumber}
                   {...register("phoneNumber")}
                   onChange={handleChange}
                 />
@@ -275,7 +280,7 @@ export const RegisterShop = () => {
                   placeholder="(99) 99999-9999"
                   mask="(99) 99999-9999"
                   name="celPhone"
-                  value={product.celPhone}
+                  value={company.celPhone}
                   {...register("celPhone", { required: true })}
                   onChange={handleChange}
                 />
@@ -301,7 +306,7 @@ export const RegisterShop = () => {
                   placeholder="99999-999"
                   mask="99999-999"
                   name="cep"
-                  value={product.cep}
+                  value={company.cep}
                   {...register("cep", { required: true })}
                   onBlur={checkCEP}
                   onChange={handleChange}
@@ -321,7 +326,7 @@ export const RegisterShop = () => {
                   type="text"
                   placeholder="Rua"
                   name="street"
-                  value={product.street}
+                  value={company.street}
                   {...register("street", { required: true })}
                   onChange={handleChange}
                 />
@@ -340,7 +345,7 @@ export const RegisterShop = () => {
                   type="number"
                   placeholder="Número da casa"
                   name="number"
-                  value={product.number}
+                  value={company.number}
                   {...register("number", { required: true })}
                   onChange={handleChange}
                 />
@@ -360,7 +365,7 @@ export const RegisterShop = () => {
                   type="text"
                   placeholder="Bairro"
                   name="district"
-                  value={product.district}
+                  value={company.district}
                   {...register("district", { required: true })}
                   onChange={handleChange}
                 />
@@ -379,7 +384,7 @@ export const RegisterShop = () => {
                   type="text"
                   placeholder="Cidade"
                   name="city"
-                  value={product.city}
+                  value={company.city}
                   {...register("city", { required: true })}
                   onChange={handleChange}
                 />
@@ -398,7 +403,7 @@ export const RegisterShop = () => {
                   type="text"
                   placeholder="Estado"
                   name="uf"
-                  value={product.uf}
+                  value={company.uf}
                   {...register("uf", { required: true })}
                   onChange={handleChange}
                 />
@@ -417,7 +422,7 @@ export const RegisterShop = () => {
                   type="text"
                   placeholder="Apto, bloco..."
                   name="complement"
-                  value={product.complement}
+                  value={company.complement}
                   {...register("complement")}
                   onChange={handleChange}
                 />
