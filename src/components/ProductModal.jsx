@@ -8,25 +8,8 @@ import { ProductContext } from "../contexts/ProductContext";
 ReactModal.setAppElement("#root");
 
 export const ProductModal = () => {
-  const {
-    productList,
-    setProductList,
-    modal,
-    setModal,
-    selectedProduct,
-    setSelectedProduct,
-    handleOpenModal,
-    product,
-    setProduct,
-    zipCodeSearched,
-    setZipCodeSearched,
-    center,
-    setCenter,
-    zoom,
-    setZoom,
-    searchTerm,
-    setSearchTerm,
-  } = useContext(ProductContext);
+  const { productList, modal, setModal, selectedProduct } =
+    useContext(ProductContext);
 
   return (
     <div>
@@ -41,8 +24,8 @@ export const ProductModal = () => {
             background: "#ffffff",
             borderRadius: "20px",
             padding: "2rem",
-            maxWidth: "40rem",
-            maxHeight: "31rem",
+            maxWidth: "50rem",
+
             margin: "auto",
           },
         }}
@@ -97,7 +80,7 @@ export const ProductModal = () => {
             </div>
           </div>
           <hr className="my-5" />
-          <div>
+          <div className="mb-5">
             <p className="text-neutral-600">
               {productList.medicineType === "Comum" ? (
                 <img
@@ -115,7 +98,7 @@ export const ProductModal = () => {
             </p>
           </div>
           <Button
-            className=" bg-green-600 hover:bg-green-500 text-neutral-100 font-semibold text-lg  rounded-lg px-6 py-2 mt-5"
+            className=" bg-green-600 hover:bg-green-500 text-neutral-100 font-semibold text-lg  rounded-lg px-10 py-2"
             onClick={() => setModal(false)}
           >
             Fechar

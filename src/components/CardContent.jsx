@@ -5,10 +5,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 
 export const CardContent = () => {
   const {
-    productList,
     handleOpenModal,
     searchTerm,
-    setSearchTerm,
     filteredProducts,
     handleSearchInputChange,
     handleSearchInputBlur,
@@ -37,8 +35,14 @@ export const CardContent = () => {
       <div className="container mx-auto">
         <h2 className="text-3xl text-neutral-600 mb-10">Produtos</h2>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-          {filteredProducts.map((product) => {
-            return <Card product={product} handleOpenModal={handleOpenModal} />;
+          {filteredProducts.map((product, index) => {
+            return (
+              <Card
+                key={index}
+                product={product}
+                handleOpenModal={handleOpenModal}
+              />
+            );
           })}
         </div>
       </div>

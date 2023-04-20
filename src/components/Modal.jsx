@@ -8,18 +8,8 @@ ReactModal.setAppElement("#root");
 export const Modal = () => {
   const {
     modal,
-    setModal,
     selectedShop,
-    productList,
-    setProductList,
-    selectedProduct,
-    setSelectedProduct,
-    handleOpenModal,
     handleCloseModal,
-    product,
-    setProduct,
-    searchTerm,
-    setSearchTerm,
   } = useContext(ShopContext);
 
   return (
