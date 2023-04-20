@@ -70,6 +70,9 @@ export const ShopProvider = ({ children }) => {
     fetchShop();
   }, [shopList]);
 
+  const handleCloseModal = () => {
+    setModal(false);
+  };
 
   const contextValues = {
     shopList,
@@ -79,6 +82,7 @@ export const ShopProvider = ({ children }) => {
     selectedShop,
     setSelectedShop,
     handleOpenModal,
+    handleCloseModal,
     shop,
     setShop,
     zipCodeSearched,

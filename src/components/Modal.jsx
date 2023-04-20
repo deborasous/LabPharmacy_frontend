@@ -6,7 +6,21 @@ import { Button } from "react-bootstrap";
 ReactModal.setAppElement("#root");
 
 export const Modal = () => {
-  const { modal, setModal, selectedShop } = useContext(ShopContext);
+  const {
+    modal,
+    setModal,
+    selectedShop,
+    productList,
+    setProductList,
+    selectedProduct,
+    setSelectedProduct,
+    handleOpenModal,
+    handleCloseModal,
+    product,
+    setProduct,
+    searchTerm,
+    setSearchTerm,
+  } = useContext(ShopContext);
 
   return (
     <div>
@@ -127,7 +141,7 @@ export const Modal = () => {
           </div>
           <Button
             className=" bg-green-600 hover:bg-green-500 text-neutral-100 font-semibold text-lg  rounded-lg px-6 py-2 mt-5"
-            onClick={() => setModal(false)}
+            onClick={handleCloseModal}
           >
             Fechar
           </Button>
