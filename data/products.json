@@ -1,0 +1,65 @@
+
+{
+  "products": [
+    {
+      "id": 1,
+      "medicineName": "Anlodipina",
+      "labName": "OnlineLab",
+      "medicineType": "Comum",
+      "dosage": "2 vezes ao dia",
+      "price": 57.8,
+      "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+      "productImage": "../src/assets/image-products/dropper-bottle-mockup.jpg"
+    },
+    {
+      "id": 2,
+      "medicineName": "Aminofilina",
+      "labName": "Teuto",
+      "medicineType": "Comum",
+      "dosage": "1 vezes ao dia",
+      "price": 24.99,
+      "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+      "productImage": "../src/assets/image-products/Medical-Bottle-Mockup-1.png"
+    },
+    {
+      "id": 3,
+      "medicineName": "Carvedilol",
+      "labName": "Cavedilol",
+      "medicineType": "Controlado",
+      "dosage": "2 vezes ao dia",
+      "price": 4.99,
+      "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+      "productImage": "../src/assets/image-products/Medicine-Packaging-Mockup.jpg"
+    },
+    {
+      "id": 4,
+      "medicineName": "Fluconazol",
+      "labName": "SeilaLab",
+      "medicineType": "Comum",
+      "dosage": "2 vezes ao dia",
+      "price": 65.66,
+      "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+      "productImage": "../src/assets/image-products/medicine_bottle_one.png"
+    },
+    {
+      "id": 5,
+      "medicineName": "Loratadina",
+      "labName": "Labdo",
+      "medicineType": "Controlado",
+      "dosage": "2 vezes ao dia",
+      "price": 4.99,
+      "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+      "productImage": "../src/assets/image-products/Mini-Pills-Bottle-Mockup.png"
+    },
+    {
+      "id": 6,
+      "medicineName": "Varfarina",
+      "labName": "Teuto",
+      "medicineType": "Controlado",
+      "dosage": "2 vezes ao dia",
+      "price": 156.6,
+      "description": "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium",
+      "productImage": "../src/assets/image-products/Pill-Bottle-Mockup.png"
+    }
+  ]
+}
