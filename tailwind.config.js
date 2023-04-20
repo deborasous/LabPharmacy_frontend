@@ -2,9 +2,19 @@
 export default {
   content: ["./src/**/*.{html,jsx}"],
   theme: {
+    maxWidth: {
+      320: "19.375rem",
+    },
+    minWidth: {
+      280: "15rem",
+    },
     extend: {
-      maxHeight: {
-        50: "3.125rem",
+      minHeight: {
+        390: "24.375rem",
+      },
+      height: {
+        card: "32rem",
+        180: "11.25rem",
       },
     },
   },

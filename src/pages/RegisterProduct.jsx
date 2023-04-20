@@ -1,97 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import InputMask from "react-input-mask";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
+
+import { ProductContext } from "../contexts/ProductContext";
 
 export const RegisterProduct = () => {
-  const [productData, setProductData] = useState([]);
-  let [product, setProduct] = useState({
-    medicineName: "",
-    labName: "",
-    dosage: "",
-    description: "",
-    price: "",
-    medicineType: "",
-    productImage: "",
-  });
-
-  const resetForm = () => {
-    setProduct({
-      medicineName: "",
-      labName: "",
-      dosage: "",
-      description: "",
-      price: "",
-      medicineType: "",
-      productImage: "",
-    });
-  };
-
-  const schema = yup.object().shape({
-    medicineName: yup.string().required("Campo Obrigatório"),
-    labName: yup.string().required("Campo Obrigatório"),
-    dosage: yup.string().required("Campo Obrigatório"),
-    description: yup.string(),
-    price: yup.string().required("Campo Obrigatório"),
-    medicineType: yup.string().required("Campo Obrigatório"),
-    productImage: yup.string(),
-  });
-
-  const {
-    register,
-    setFocus,
-    setValue,
-    formState: { errors },
-  } = useForm(schema);
-
-  const validateFields = (fields) => {
-    for (const key in fields) {
-      if (fields.hasOwnProperty(key) && !fields[key]) {
-        return false;
-      }
-    }
-    return true;
-  };
-
-  const addproduct = () => {
-    const newproductData = [...productData, product];
-    localStorage.setItem("Produtos", JSON.stringify(newproductData));
-    setProductData(newproductData);
-  };
-
-  const submitproduct = async (e) => {
-    e.preventDefault();
-    const areFieldsValid = validateFields(
-      product.medicineName &&
-        product.labName &&
-        product.dosage &&
-        product.price &&
-        product.medicineType
-    );
-    if (areFieldsValid) {
-      try {
-        await addproduct();
-        resetForm();
-        toast.success("Produto cadastrado com sucesso!");
-      } catch (error) {
-        toast.error(`Ocorreu um erro ao cadastrar o produto: ${error.message}`);
-      }
-    } else {
-      toast.warning("Preencha todos os campos obrigatórios");
-    }
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setProduct((prevproduct) => ({
-      ...prevproduct,
-      [name]: value,
-    }));
-  };
+  const { register, errors, submitproduct, handleChange, product } =
+    useContext(ProductContext);
 
   return (
     <section className="py-10">
