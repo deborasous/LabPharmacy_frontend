@@ -1,40 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Button } from "react-bootstrap";
-import { AiOutlinePlusCircle, AiFillEdit } from "react-icons/ai";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { CgTrash } from "react-icons/cg";
 import ReactModal from "react-modal";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { ShopContext } from "../contexts/ShopContext";
+import { Link } from "react-router-dom";
+import { ModalShop } from "../components/Modal";
 
 ReactModal.setAppElement("#root");
 
 export const ShopList = () => {
-  const {
-    shop,
-    setShop,
-    shopList,
-    setShopList,
-    modal,
-    setModal,
-    selectedShop,
-    setSelectedShop,
-    zipCodeSearched,
-    setZipCodeSearched,
-    center,
-    setCenter,
-    zoom,
-    setZoom,
-    position,
-    setPosition,
-    // handleOpenModal,
-    searchTerm,
-    setSearchTerm,
-  } = useContext(ShopContext);
-
-  const handleOpenModal = (item) => {
-    setSelectedShop(item);
-    setModal(true);
-  };
+  const { shopList, removeShop, position, handleOpenModal } =
+    useContext(ShopContext);
 
   return (
     <section className="container m-auto my-12">
@@ -66,20 +45,22 @@ export const ShopList = () => {
               <tr key={index}>
                 <td className="border-2 py-2 px-2">{item.businessName}</td>
                 <td className="border-2">
-                  <a
+                  <Link
                     className=" py-2 px-2"
-                    href="https://wa.me/5548984847948?text=Seja+bem+vindo"
+                    to="https://wa.me/5548984847948?text=Seja+bem+vindo"
                   >
                     {item.celPhone}
-                  </a>
+                  </Link>
                 </td>
                 <td className="border-2 py-2 px-2">{item.email}</td>
                 <td className="border-2 py-2 px-2 ">
                   <div className="flex justify-around">
-                    <button onClick={() => handleOpenModal(item)}>
+                    <Button onClick={() => handleOpenModal(item)}>
                       <AiOutlinePlusCircle className="text-2xl text-green-700" />
-                    </button>
-                    <AiFillEdit className="text-2xl text-red-600" />
+                    </Button>
+                    <Button onClick={() => removeShop(item)}>
+                      <CgTrash className="text-2xl text-red-600" />
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -87,128 +68,8 @@ export const ShopList = () => {
           </tbody>
         </table>
       </div>
-      <ReactModal
-        isOpen={modal}
-        style={{
-          overlay: {
-            backgroundColor: "rgba(0, 0 ,0, 0.5)",
-            zIndex: 10000,
-          },
-          content: {
-            border: "1px solid #fff",
-            background: "#ffffff",
-            borderRadius: "20px",
-            padding: "2rem",
-            maxWidth: "40rem",
-            maxHeight: "31rem",
-            margin: "auto",
-            height: "100vh",
-            overflowY: "scroll",
-            zIndex: 10000,
-          },
-        }}
-      >
-        <div className="max-w-lg">
-          <h2 className="text-xl text-neutral-700 text-center mb-5">
-            Informações do item
-          </h2>
-          <div>
-            <div>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Razão Social:
-                </span>
-                {selectedShop && selectedShop.businessName}
-              </p>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Nome Fantasia:
-                </span>
-                {selectedShop && selectedShop.fantasyName}
-              </p>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  CNPJ:
-                </span>
 
-                {selectedShop && selectedShop.cnpj}
-              </p>
-            </div>
-            <div>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Celular:
-                </span>
-                {selectedShop && selectedShop.celPhone}
-              </p>
-              {selectedShop && selectedShop.phoneNumber && (
-                <p className="text-neutral-600">
-                  <span className="mr-2 text-neutral-700 font-semibold">
-                    Telefone:
-                  </span>
-                  {selectedShop.phoneNumber}
-                </p>
-              )}
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  E-mail:
-                </span>
-                {selectedShop && selectedShop.email}
-              </p>
-            </div>
-          </div>
-          <hr className="my-5" />
-          <div>
-            <div>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Rua:{" "}
-                </span>
-                {selectedShop && selectedShop.street}
-              </p>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  N°:{" "}
-                </span>
-                {selectedShop && selectedShop.number}
-              </p>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Bairro:
-                </span>
-                {selectedShop && selectedShop.district}
-              </p>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Cidade:
-                </span>
-                {selectedShop && selectedShop.city}
-              </p>
-              <p className="text-neutral-600">
-                <span className="mr-2 text-neutral-700 font-semibold">
-                  Estado:
-                </span>
-                {selectedShop && selectedShop.uf}
-              </p>
-              {selectedShop && selectedShop.complement && (
-                <p className="text-neutral-600">
-                  <span className="mr-2 text-neutral-700 font-semibold">
-                    Complemento:
-                  </span>
-                  {selectedShop.complement}
-                </p>
-              )}
-            </div>
-          </div>
-          <Button
-            className=" bg-green-600 hover:bg-green-500 text-neutral-100 font-semibold text-lg  rounded-lg px-6 py-2 mt-5"
-            onClick={() => setModal(false)}
-          >
-            Fechar
-          </Button>
-        </div>
-      </ReactModal>
-
+      <ModalShop />
       <MapContainer
         center={position}
         zoom={13}

@@ -53,6 +53,7 @@ export const ShopProvider = ({ children }) => {
   const [shopList, setShopList] = useState([]);
   const [modal, setModal] = useState(false);
   const [selectedShop, setSelectedShop] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
   const [zipCodeSearched, setZipCodeSearched] = useState("");
   const [center, setCenter] = useState([-27.5974, -48.5495]);
   const [zoom, setZoom] = useState(13);
@@ -72,6 +73,7 @@ export const ShopProvider = ({ children }) => {
       productImage: "",
     });
   };
+
   const {
     register,
     handleSubmit,
@@ -171,6 +173,21 @@ export const ShopProvider = ({ children }) => {
     setShopList(newCompanyData);
   };
 
+  const removeShop = (shopToRemove) => {
+    setShopList((prevShopList) =>
+      prevShopList.filter((item) => item !== shopToRemove)
+    );
+  };
+
+  const editShop = (updatedShop) => {
+    const updatedShopList = shopList.map((item) =>
+      item === selectedShop ? updatedShop : item
+    );
+    setShopList(updatedShopList);
+    setSelectedShop(null);
+    setModal(false);
+  };
+
   //Não funciona quando passado como parametro do handleSubmit do useForm dentro do componente RegisterShop
   const submitCompany = (e) => {
     e.preventDefault();
@@ -221,6 +238,10 @@ export const ShopProvider = ({ children }) => {
     handleChange,
     submitCompany,
     addShop,
+    removeShop,
+    editShop,
+    isEditing,
+    setIsEditing,
     checkCEP,
     validateFields,
     register,
