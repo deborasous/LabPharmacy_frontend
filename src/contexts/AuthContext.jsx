@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -33,6 +34,8 @@ export const UserProvider = ({ children }) => {
 
   const navigate = useNavigate();
 
+  //login
+
   const submitLogin = async () => {
     try {
       const localStoreUser = localStorage.getItem("user");
@@ -44,14 +47,36 @@ export const UserProvider = ({ children }) => {
       }
 
       if (!localStoreUser) {
-        throw new Error("Usuário não cadastrado");
+        toast.warning("Usuário não cadastrado");
       }
 
       if (email !== localStoretEmail || password !== localStorePassword) {
-        throw new Error("Credenciais inválidas");
+        toast.warning("E-mail ou senha inválidos");
       }
     } catch (error) {
-      console.log("Usuário não autenticado", error);
+      toast.warning("Usuário não autenticado", error);
+    }
+  };
+
+  //cadastrar
+
+  const submitRegisterUser = async () => {
+    try {
+      await schema.validate({ userName, email, password, confirmPassword });
+      const user = {
+        userName,
+        email,
+        password,
+      };
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+      navigate("/entrar");
+      toast.success("Usuário cadastrado com sucesso");
+
+      console.log("Usuário cadastrado com sucesso");
+    } catch (error) {
+      toast.warning("Vixi, algo de errado não está certo", error);
     }
   };
 
@@ -68,7 +93,9 @@ export const UserProvider = ({ children }) => {
     register,
     handleSubmit,
     errors,
+    submitRegisterUser,
   };
+
   return (
     <AuthContext.Provider value={contextValues}>
       {children}

@@ -4,8 +4,7 @@ import { CardContent } from "../components/CardContent";
 
 export const ProductList = () => {
   return (
-    <section className="antialiased bg-gray-100 text-gray-900 font-sans">
-      <hr />
+    <section className="container m-auto my-12 ">
       <CardContent />
       <ProductModal />
     </section>

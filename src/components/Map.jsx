@@ -1,32 +1,29 @@
-import React, { useContext } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { ShopContext } from "../contexts/ShopContext";
 
 export const MapShop = () => {
-  const { shop, center, zoom } = useContext(ShopContext);
 
   return (
-    <section>
-      <MapContainer center={center} zoom={zoom} style={{ height: "400px" }}>
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {shop.map((shop, index) => (
-          <Marker key={index} position={[shop.latitude, shop.longitude]}>
-            <Popup>
-              <div className="flex gap-2">
-                <div>
-                  {`
-                  ${shop.celPhone}, 
-                  ${shop.phoneNumber}
-                  ${shop.email}, 
-                  ${shop.businessName}, 
-                  ${shop.fantasyName}, 
-                  ${shop.cnpj}, 
+    <MapContainer center={position} zoom={13} style={{ height: "450px" }}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      <Marker position={position}>
+        <Popup>
+          <h2>Dados da loja</h2>
+          <div className="flex gap-2">
+            <div>
+              {`
+                 Celular:  ${shop.celPhone}, 
+                 Telefone: ${shop.phoneNumber}
+                 E-mail: ${shop.email}, 
+                 Razão social: ${shop.businessName}, 
+                 Nome Fatasia: ${shop.fantasyName}, 
+                 CNPJ: ${shop.cnpj}, 
                   `}
-                </div>
-                <div>
-                  {`
-                  ${shop.street}, 
+            </div>
+            <div>
+              {`
+                ${shop.street}, 
                   ${shop.number}, 
                   ${shop.complement},
                   ${shop.district},
@@ -34,12 +31,10 @@ export const MapShop = () => {
                   ${shop.uf}
                   ${shop.cep} 
                   `}
-                </div>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
-    </section>
+            </div>
+          </div>
+        </Popup>
+      </Marker>
+    </MapContainer>
   );
 };

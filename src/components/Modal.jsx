@@ -6,11 +6,7 @@ import { Button } from "react-bootstrap";
 ReactModal.setAppElement("#root");
 
 export const Modal = () => {
-  const {
-    modal,
-    selectedShop,
-    handleCloseModal,
-  } = useContext(ShopContext);
+  const { modal, selectedShop, handleCloseModal } = useContext(ShopContext);
 
   return (
     <div>
