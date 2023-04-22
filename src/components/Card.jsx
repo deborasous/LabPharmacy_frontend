@@ -21,7 +21,7 @@ export const Card = ({ product, handleOpenModal }) => {
       </div>
       <div className="flex justify-around">
         <Button
-          className=" bg-green-600 hover:bg-green-500 text-neutral-100 font-semibold text-2xl  rounded-lg px-14 py-3 mt-5"
+          className=" bg-green-600 hover:bg-green-500 text-neutral-100 font-semibold text-base  rounded-lg px-14 py-2 mt-5"
           onClick={() => handleOpenModal(product)}
         >
           Mais

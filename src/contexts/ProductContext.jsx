@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -41,6 +41,7 @@ export const ProductProvider = ({ children }) => {
   });
 
   const {
+    handleSubmit,
     register,
     setFocus,
     setValue,
@@ -73,7 +74,7 @@ export const ProductProvider = ({ children }) => {
     );
     if (areFieldsValid) {
       try {
-        await addproduct();
+        addproduct();
         resetForm();
         toast.success("Produto cadastrado com sucesso!");
       } catch (error) {
@@ -130,30 +131,33 @@ export const ProductProvider = ({ children }) => {
     setSearchTerm("");
   };
 
+
+
   const contextValues = {
-    register,
-    setFocus,
-    setValue,
-    errors,
-    validateFields,
-    submitproduct,
-    handleChange,
-    addproduct,
-    productList,
-    setProductList,
-    modal,
     setModal,
-    selectedProduct,
-    setSelectedProduct,
-    handleOpenModal,
-    handleCloseModal,
+    modal,
     product,
     setProduct,
-    searchTerm,
+    setProductList,
+    productList,
+    setFocus,
+    setValue,
     setSearchTerm,
-    filteredProducts,
+    searchTerm,
+    setSelectedProduct,
+    selectedProduct,
+    errors,
+    register,
+    addproduct,
+    validateFields,
+    handleSubmit,
+    handleChange,
+    submitproduct,
+    handleOpenModal,
+    handleCloseModal,
     handleSearchInputChange,
     handleSearchInputBlur,
+    filteredProducts,
   };
 
   return (

@@ -4,6 +4,7 @@ export default {
   theme: {
     maxWidth: {
       320: "19.375rem",
+      600: "37.5rem",
     },
     minWidth: {
       280: "15rem",

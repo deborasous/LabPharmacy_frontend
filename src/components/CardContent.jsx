@@ -13,7 +13,7 @@ export const CardContent = () => {
   } = useContext(ProductContext);
 
   return (
-    <section className="px-10">
+    <div>
       <div className="max-w-md mx-auto mb-10 border-2 border-neutral-300 rounded-md">
         <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
           <div className="grid place-items-center h-full w-12 text-gray-300">
@@ -46,6 +46,6 @@ export const CardContent = () => {
           })}
         </div>
       </div>
-    </section>
+    </div>
   );
 };

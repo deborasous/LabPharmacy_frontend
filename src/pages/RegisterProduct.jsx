@@ -11,7 +11,7 @@ export const RegisterProduct = () => {
     useContext(ProductContext);
 
   return (
-    <section className="py-10">
+    <section className="container m-auto my-12">
       <h1 className="text-4xl text-center text-neutral-600 mb-6">
         Cadastrar Medicamentos
       </h1>
