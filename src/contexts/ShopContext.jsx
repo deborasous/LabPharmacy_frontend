@@ -1,4 +1,4 @@
-import { createContext, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { toast } from "react-toastify";
@@ -53,25 +53,16 @@ export const ShopProvider = ({ children }) => {
   const [shopList, setShopList] = useState([]);
   const [modal, setModal] = useState(false);
   const [selectedShop, setSelectedShop] = useState({});
+  const [isEditing, setIsEditing] = useState(false);
+  const [position, setPosition] = useState([-27.5972029, -48.5494815]);
   const [zipCodeSearched, setZipCodeSearched] = useState("");
   const [center, setCenter] = useState([-27.5974, -48.5495]);
   const [zoom, setZoom] = useState(13);
   const [searchTerm, setSearchTerm] = useState("");
-  const [position, setPosition] = useState([-27.5972029, -48.5494815]);
-  console.log(shopList, "list");
+  const [filteredShop, setFilteredShop] = useState(shopList);
+
   //***lista de lojas
 
-  const resetForm = () => {
-    setProduct({
-      medicineName: "",
-      labName: "",
-      dosage: "",
-      description: "",
-      price: "",
-      medicineType: "",
-      productImage: "",
-    });
-  };
   const {
     register,
     handleSubmit,
@@ -97,7 +88,7 @@ export const ShopProvider = ({ children }) => {
     setModal(true);
   };
 
-  //cadastrar loja
+  //cadastro, exclusão e edição de loja
 
   const validateFields = () => {
     if (!shop.businessName || typeof shop.businessName !== "string") {
@@ -171,6 +162,21 @@ export const ShopProvider = ({ children }) => {
     setShopList(newCompanyData);
   };
 
+  const removeShop = (shopToRemove) => {
+    setShopList((prevShopList) =>
+      prevShopList.filter((item) => item !== shopToRemove)
+    );
+  };
+
+  const editShop = (updatedShop) => {
+    const updatedShopList = shopList.map((item) =>
+      item === selectedShop ? updatedShop : item
+    );
+    setShopList(updatedShopList);
+    setSelectedShop(null);
+    setModal(false);
+  };
+
   //Não funciona quando passado como parametro do handleSubmit do useForm dentro do componente RegisterShop
   const submitCompany = (e) => {
     e.preventDefault();
@@ -198,6 +204,34 @@ export const ShopProvider = ({ children }) => {
     }));
   };
 
+  //search
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filteredList = shopList.filter(
+        (shop) =>
+          shop.businessName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          shop.celPhone.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          shop.cep.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredShop(filteredList);
+
+      if (filteredList.length === 0) {
+        setFilteredShop(shopList);
+      }
+    } else {
+      setFilteredShop(shopList);
+    }
+  }, [searchTerm, shopList]);
+
+  const handleSearchInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const handleSearchInputBlur = () => {
+    setSearchTerm("");
+  };
+
   const contextValues = {
     shop,
     setShop,
@@ -221,11 +255,18 @@ export const ShopProvider = ({ children }) => {
     handleChange,
     submitCompany,
     addShop,
+    removeShop,
+    editShop,
+    isEditing,
+    setIsEditing,
     checkCEP,
     validateFields,
     register,
     handleSubmit,
     errors,
+    handleSearchInputChange,
+    handleSearchInputBlur,
+    filteredShop,
   };
 
   return (

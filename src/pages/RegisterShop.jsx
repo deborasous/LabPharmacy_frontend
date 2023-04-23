@@ -217,6 +217,7 @@ export const RegisterShop = () => {
                 )}
               </Form.Group>
             </div>
+            
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 ">
               <Form.Group
                 className="grid mb-4 text-neutral-500"
