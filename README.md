@@ -22,7 +22,12 @@ Pharma System é um sistema de gestão de rede de farmácias e controle de medic
 
 O sistema permite o monitoramento das farmácias e medicamentos cadastrados.
 
-#### imagem aqui
+## Demonstração de uso
+
+![demo](https://user-images.githubusercontent.com/59830792/233870520-2892ebdb-12aa-4b33-9833-b62ee42d4349.gif)
+
+
+
 
 ## Funcionalidades
 
@@ -33,10 +38,6 @@ O sistema permite o monitoramento das farmácias e medicamentos cadastrados.
 :heavy_check_mark:`Funcionalidade 3:` Cadastro de usuários.
 
 :heavy_check_mark:`Funcionalidade 4:` Listar as farmácias cadastradas no sistema e mostrar a localização no mapa.
-
-## Demonstração de uso
-
-
 
 
 ## Ferramentas utilizadas
