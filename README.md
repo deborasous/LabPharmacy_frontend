@@ -10,7 +10,7 @@
 
 - [Ferramentas utilizadas](#ferramentas-utilizadas)
 
-- [Construção e instalação](#construção-e-instalação)
+- [Construção e instalação](#construção-e-instalação-de-dependências)
 
 - [Executar](#executar)
 
@@ -36,7 +36,8 @@ O sistema permite o monitoramento das farmácias e medicamentos cadastrados.
 
 ## Demonstração de uso
 
-vídeo aqui
+
+
 
 ## Ferramentas utilizadas
 
@@ -48,23 +49,17 @@ vídeo aqui
 <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
 <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"/>
 
-<p align="center">
+<p align="left">
   <a href="https://vitejs.dev" target="_blank" rel="noopener noreferrer">
     <img height="50"  src="https://vitejs.dev/logo.svg" alt="Vite logo">
   </a>
 </p>
-<br/>
-<p align="center">
-  <a href="https://npmjs.com/package/vite"><img src="https://img.shields.io/npm/v/vite.svg" alt="npm package"></a>
-  <a href="https://nodejs.org/en/about/releases/"><img src="https://img.shields.io/node/v/vite.svg" alt="node compatibility"></a>
-  <a href="https://github.com/vitejs/vite/actions/workflows/ci.yml"><img src="https://github.com/vitejs/vite/actions/workflows/ci.yml/badge.svg?branch=main" alt="build status"></a>
-  <a href="https://pr.new/vitejs/vite"><img src="https://developer.stackblitz.com/img/start_pr_dark_small.svg" alt="Start new PR in StackBlitz Codeflow"></a>
-  <a href="https://chat.vitejs.dev"><img src="https://img.shields.io/badge/chat-discord-blue?style=flat&logo=discord" alt="discord chat"></a>
-</p>
-React icon
-React Leaflet
 
-## Construção e instalação
+* React icon
+* React Leaflet
+
+
+## Construção e instalação de dependências
 
 ##### React + vite
 
@@ -87,16 +82,16 @@ npm i react-router-dom
 npm install react-bootstrap
 ```
 
-##### React bootstrap
+##### React icons
 
 ```
 npm install react-icons --save
 ```
 
-##### React hook form
+##### React hook form + yup
 
 ```
-npm install react-hook-form
+npm install react-hook-form @hookform/resolvers yup
 ```
 
 ##### React modal
@@ -105,13 +100,13 @@ npm install react-hook-form
 npm i react-modal
 ```
 
-##### React modal
+##### React toastify
 
 ```
 npm i react-toastify
 ```
 
-##### Tailwind
+##### Tailwindcss
 
 ```
 npm install -D tailwindcss
@@ -148,3 +143,4 @@ Para executar o Servidor
 ```
 npm run dev
 ```
+
