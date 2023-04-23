@@ -17,6 +17,10 @@ const schema = yup.object().shape({
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       "Senha deve conter no mínimo 8 caracteres e uma letra"
     ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Senhas devem ser iguais")
+    .required("Confirme a senha"),
 });
 
 //**Provider Camponent */
@@ -25,6 +29,12 @@ export const UserProvider = ({ children }) => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [navbar, setNavbar] = useState(false);
+  const [isLogged, setIsLogged] = useState();
+  const [auth, setAuth] = useState({
+    isAuthenticated: false,
+    user: null,
+  });
 
   const {
     register,
@@ -43,8 +53,14 @@ export const UserProvider = ({ children }) => {
         JSON.parse(localStoreUser);
 
       if (email === localStoretEmail && password === localStorePassword) {
+        const user = { email: localStoretEmail }; // Dados do usuário autenticado
+        setAuth({ isAuthenticated: true, user }); // Atualiza o estado de autenticação
+        setIsLogged(true); // Altera a variável isLogged para true
         navigate("/");
       }
+      // if (email === localStoretEmail && password === localStorePassword) {
+      //   navigate("/");
+      // }
 
       if (!localStoreUser) {
         toast.warning("Usuário não cadastrado");
@@ -94,6 +110,12 @@ export const UserProvider = ({ children }) => {
     handleSubmit,
     errors,
     submitRegisterUser,
+    auth,
+    setAuth,
+    navbar,
+    setNavbar,
+    isLogged,
+    setIsLogged,
   };
 
   return (

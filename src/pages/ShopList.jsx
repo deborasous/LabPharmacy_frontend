@@ -3,23 +3,22 @@ import { Button } from "react-bootstrap";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { CgTrash } from "react-icons/cg";
 import ReactModal from "react-modal";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
 import { ShopContext } from "../contexts/ShopContext";
 import { Link } from "react-router-dom";
-import { ModalShop } from "../components/Modal";
+import { ModalShop } from "../components/ModalShop";
+import { MapShop } from "../components/Map";
 
 ReactModal.setAppElement("#root");
 
 export const ShopList = () => {
-  const { shopList, removeShop, position, handleOpenModal } =
-    useContext(ShopContext);
+  const { removeShop, handleOpenModal, filteredShop } = useContext(ShopContext);
 
   return (
     <section className="container m-auto my-12">
       <h1 className="text-4xl text-center text-neutral-600 mb-6 mt-5">
         Lojas por região
       </h1>
+      <MapShop />
 
       <hr className="pb-10" />
       <div className="container m-auto">
@@ -41,7 +40,7 @@ export const ShopList = () => {
             </tr>
           </thead>
           <tbody>
-            {shopList.map((item, index) => (
+            {filteredShop.map((item, index) => (
               <tr key={index}>
                 <td className="border-2 py-2 px-2">{item.businessName}</td>
                 <td className="border-2">
@@ -70,31 +69,6 @@ export const ShopList = () => {
       </div>
 
       <ModalShop />
-      <MapContainer
-        center={position}
-        zoom={13}
-        style={{ height: "450px", marginTop: "60px" }}
-      >
-        <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-        {shopList.map((item, index) => (
-          <Marker key={index} position={position}>
-            <Popup>
-              <h2>{item.businessName}</h2>
-              <div>
-                <p>
-                  {item.street}, {item.number}
-                </p>
-                <p>{item.complement}</p>
-                <p>{item.district}</p>
-                <p>
-                  {item.city} - {item.uf}
-                </p>
-                <p>{item.cep}</p>
-              </div>
-            </Popup>
-          </Marker>
-        ))}
-      </MapContainer>
     </section>
   );
 };
